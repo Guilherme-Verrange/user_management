@@ -1,7 +1,11 @@
 var fields = document.querySelectorAll("#form-user-create [name]");
 var user = {};
 
-fields.forEach(function(field, index){
+document.getElementById("form-user-create").addEventListener("submit", function(e){
+
+   e.preventDefault();
+
+   fields.forEach(function(field, index){
 
     if (field.name == "gender"){
 
@@ -17,4 +21,6 @@ fields.forEach(function(field, index){
    
 });
 
-console.log(user);
+   console.log(user);
+
+});
