@@ -3,9 +3,7 @@ var user = {};
 
 function addLine(dataUser){
 
-    var tr = document.createElement("tr");
-
-    tr.innerHTML = `
+    document.getElementById("table-users").innerHTML = `
     
     <tr>
         <td>
@@ -22,8 +20,6 @@ function addLine(dataUser){
      </tr>
     
     `;
-
-    document.getElementById("table-users").appendChild(tr);
 }
 
 document.getElementById("form-user-create").addEventListener("submit", function(e){
