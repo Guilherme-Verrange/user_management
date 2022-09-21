@@ -10,15 +10,49 @@ class UserController{
 
     onSubmit(){
 
-       this.formElement.addEventListener("submit", (e) => {
+        this.formElement.addEventListener("submit", event => {
 
-            e.preventDefault();
+            event.preventDefault();
 
-            this.addLine(this.getValues())
-         
-         });
+            let values = this.getValues();
+
+            this.getPhoto((content) => {
+
+                values.photo = content;
+
+                this.addLine(values);
+            });
+
+        
+        });
 
     } // class for to take submit function
+
+
+    getPhoto(callback){
+
+        let fileReader = new FileReader();
+
+        let elements = [...this.formElement.elements].filter(item => {
+
+            if (item.name === 'photo') {
+                return item;
+            }
+
+        });
+
+        let file = elements[0].files[0];
+
+        fileReader.onload = () => {
+
+            callback(fileReader.result);
+
+        };
+
+        fileReader.readAsDataURL(file);
+
+    }
+
 
 
     getValues(){
@@ -26,6 +60,7 @@ class UserController{
         let user = {};
 
         [...this.formElement.elements].forEach(function(field, index){
+            //Transforma o elemento em um array para ser entendido pelo ForEach(Spread operator).
 
             if (field.name == "gender"){
         
@@ -55,7 +90,7 @@ class UserController{
         
         <tr>
             <td>
-            <img src="dist/img/user1-128x128.jpg" alt="User Image" class="img-circle img-sm">
+            <img src=${dataUser.photo} alt="User Image" class="img-circle img-sm">
             </td>
                 <td>${dataUser.name}</td>
                 <td>${dataUser.email}</td>
