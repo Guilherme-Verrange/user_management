@@ -159,7 +159,22 @@ class UserController{
 
         tr.querySelector(".btn-edit").addEventListener("click", e => {
 
-            console.log(JSON.parse(tr.dataset.user));
+            let json = JSON.parse(tr.dataset.user);
+            let form = document.querySelector("#form-user-update")
+
+            for(let name in json){
+
+               let field = form.querySelector("[name="+ name.replace("_", "") + "] ");
+
+               if (field){
+                if(field.type == 'file') continue; // Ignora o restante da instrução e continua o bloco de comando
+                field.value = json[name];
+
+               }
+
+            }
+
+
             this.showPanelUpdate();
 
         });
