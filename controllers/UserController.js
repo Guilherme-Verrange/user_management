@@ -16,11 +16,19 @@ class UserController{
 
             let values = this.getValues();
 
+           let btn = this.formElement.querySelector("[type=submit]")
+              
+            btn.disable = true; // hesabilita o submit
+
             this.getPhoto().then
             ((content) => {
                 values.photo = content;
 
                 this.addLine(values);
+
+                this.formElement.reset(); //Reseta formulário após enviar.
+
+                btn.disable = false; //habilita o submit
 
             }, (e) => {
                 console.error(e);
