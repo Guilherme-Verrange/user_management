@@ -16,9 +16,11 @@ class UserController{
 
             let values = this.getValues();
 
+            if(!values) return false;
+
            let btn = this.formElement.querySelector("[type=submit]")
               
-            btn.disable = true; // hesabilita o submit
+            btn.disable = true; // desabilita o submit
 
             this.getPhoto().then
             ((content) => {
@@ -82,9 +84,17 @@ class UserController{
     getValues(){
 
         let user = {};
+        let isValid = true;
 
         [...this.formElement.elements].forEach(function(field, index){
             //Transforma o elemento em um array para ser entendido pelo ForEach(Spread operator).
+
+            if (['name', 'email', 'password'].indexOf(field.name) > -1 && !field.value){ //Validação de usuário
+
+                field.parentElement.classList.add('has-error');
+                isValid = false;
+               
+            }
 
             if (field.name == "gender"){
         
@@ -103,6 +113,11 @@ class UserController{
             }
            
         }); 
+
+        if (!isValid){
+
+            return false;
+        }
         
         return new User(user.name, user.gender, user.birth,user.country,
                  user.email, user.password, user.photo, user.admin); //  Instanciando objeto da classe User.
