@@ -7,6 +7,7 @@ class UserController{
         this.tableElement = document.getElementById(tableId);
         this.onSubmit();
         this.onEdit();
+        this.selectAll();
 
     }
 
@@ -99,6 +100,8 @@ class UserController{
                 values.photo = content;
 
                 this.addLine(values);
+
+                this.insert(values);
 
                 this.formElement.reset(); //Reseta formulário após enviar.
 
@@ -197,6 +200,49 @@ class UserController{
 
 
     } //  class that get values of form
+
+    getusersStorage () {
+
+        let users = [];
+
+        if (sessionStorage.getItem("users")) {
+
+            users = JSON.parse(sessionStorage.getItem("users"));
+
+        }
+
+        return users
+
+    }
+
+    selectAll() {
+       
+        let users = this.getusersStorage();
+        
+        users.forEach(dataUser => {
+
+            let user = new User();
+
+            user.loadFromJSON(dataUser);
+        
+            this.addLine(user);
+
+        })
+
+    }
+
+    insert(data) {
+
+        let users = this.getusersStorage();
+
+        users.push(data);
+
+        sessionStorage.setItem("users", JSON.stringify(users));
+
+    }
+
+   
+
 
 
      addLine(dataUser){
